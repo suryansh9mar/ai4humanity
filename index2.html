@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CollegeMatch - Find Your Perfect College</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4CAF50;
+            --warning: #ff9e00;
+            --danger: #ef476f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #495057;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .form-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-lg {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+        }
+        
+        .btn-center {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .results {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .results-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .college-card {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .college-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .college-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .college-details {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .college-detail {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .detail-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 3px;
+        }
+        
+        .detail-value {
+            font-weight: 500;
+        }
+        
+        .college-match {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .match-percentage {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+        
+        .match-bar {
+            flex: 1;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .match-fill {
+            height: 100%;
+            background: var(--success);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .testimonials {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 60px 0;
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+        
+        .testimonial-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .author-name {
+            font-weight: 500;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 20px auto;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-icon">🎓</span>
+                <span>CollegeMatch</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Colleges</a>
+                <a href="#">Success Stories</a>
+                <a href="#">Contact</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Find Your Perfect College Match</h1>
+            <p>Enter your details and let our AI predict the best colleges and branches for you based on your interests, rank, and preferences.</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <form id="predictor-form" class="form-container">
+            <h2 class="form-title">Enter Your Details</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="name">Full Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="state">Home State</label>
+                    <select class="form-control" id="state">
+                        <option value="">Select your home state</option>
+                        <option value="andhra-pradesh">Andhra Pradesh</option>
+                        <option value="arunachal-pradesh">Arunachal Pradesh</option>
+                        <option value="assam">Assam</option>
+                        <option value="bihar">Bihar</option>
+                        <option value="chhattisgarh">Chhattisgarh</option>
+                        <option value="goa">Goa</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="haryana">Haryana</option>
+                        <option value="himachal-pradesh">Himachal Pradesh</option>
+                        <option value="jharkhand">Jharkhand</option>
+                        <option value="karnataka">Karnataka</option>
+                        <option value="kerala">Kerala</option>
+                        <option value="madhya-pradesh">Madhya Pradesh</option>
+                        <option value="maharashtra">Maharashtra</option>
+                        <option value="manipur">Manipur</option>
+                        <option value="meghalaya">Meghalaya</option>
+                        <option value="mizoram">Mizoram</option>
+                        <option value="nagaland">Nagaland</option>
+                        <option value="odisha">Odisha</option>
+                        <option value="punjab">Punjab</option>
+                        <option value="rajasthan">Rajasthan</option>
+                        <option value="sikkim">Sikkim</option>
+                        <option value="tamil-nadu">Tamil Nadu</option>
+                        <option value="telangana">Telangana</option>
+                        <option value="tripura">Tripura</option>
+                        <option value="uttar-pradesh">Uttar Pradesh</option>
+                        <option value="uttarakhand">Uttarakhand</option>
+                        <option value="west-bengal">West Bengal</option>
+                        <option value="delhi">Delhi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="exam-type">Entrance Exam</label>
+                    <select class="form-control" id="exam-type">
+                        <option value="">Select entrance exam</option>
+                        <option value="jee-main">JEE Main</option>
+                        <option value="jee-advanced">JEE Advanced</option>
+                        <option value="neet">NEET</option>
+                        <option value="bitsat">BITSAT</option>
+                        <option value="comedk">COMEDK</option>
+                        <option value="wbjee">WBJEE</option>
+                        <option value="viteee">VITEEE</option>
+                        <option value="srmjeee">SRMJEEE</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="percentile">Percentile/Rank</label>
+                    <input type="text" class="form-control" id="percentile" placeholder="Enter your percentile or rank">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="caste-category">Category</label>
+                    <select class="form-control" id="caste-category">
+                        <option value="">Select your category</option>
+                        <option value="general">General</option>
+                        <option value="obc">OBC-NCL</option>
+                        <option value="sc">SC</option>
+                        <option value="st">ST</option>
+                        <option value="ews">EWS</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Your Interests (Select up to 3)</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="computer-science"> Computer Science
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="electronics"> Electronics
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="mechanical"> Mechanical
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="civil"> Civil
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="chemical"> Chemical
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="biotechnology"> Biotechnology
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="aerospace"> Aerospace
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="medicine"> Medicine
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="business"> Business
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="interests" value="arts"> Arts & Humanities
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Preferred Location</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="location" value="north"> North India
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="location" value="south"> South India
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="location" value="east"> East India
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="location" value="west"> West India
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="location" value="central"> Central India
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="location" value="home-state"> Home State Only
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">College Type</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="college-type" value="iit"> IITs
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="college-type" value="nit"> NITs
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="college-type" value="iiit"> IIITs
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="college-type" value="government"> Government Colleges
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="college-type" value="private"> Private Colleges
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="college-type" value="deemed"> Deemed Universities
+                    </label>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-lg btn-center">Find My Colleges</button>
+            <div class="spinner" id="loading-spinner"></div>
+        </form>
+        
+        <div id="results" class="results">
+            <h2 class="results-title">Your College Matches</h2>
+            <div id="college-list">
+                <!-- College results will be inserted here -->
+            </div>
+        </div>
+        
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">AI-Powered Predictions</h3>
+                <p>Our cutting-edge AI analyzes thousands of data points to give you personalized college recommendations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Accurate Rankings</h3>
+                <p>We use real admission data from previous years to provide you with the most accurate predictions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Personalized Results</h3>
+                <p>Get college recommendations that match your interests, strengths, and preferences.</p>
+            </div>
+        </section>
+        
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="testimonial-title">What Our Users Say</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Thanks to CollegeMatch, I found my dream college! The predictions were spot on and helped me make the right choice."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">A</div>
+                            <div class="author-name">Ankit, Delhi</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"I was confused about which branch to choose, but the AI recommendations helped me find the perfect fit for my interests."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">P</div>
+                            <div class="author-name">Priya, Mumbai</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The tool gave me options I hadn't even considered! Now I'm studying at a college that's perfect for me."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">R</div>
+                            <div class="author-name">Rahul, Bangalore</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="copyright">© 2025 CollegeMatch. All rights reserved.</div>
+        </div>
+    </footer>
+    
+    <script>
+        // Sample college data
+        const collegeData = [
+            {
+                id: 1,
+                name: "Indian Institute of Technology, Delhi",
+                location: "Delhi",
+                type: "IIT",
+                branches: ["Computer Science", "Electronics", "Mechanical", "Civil", "Chemical"],
+                cutoff: 98.5,
+                fees: "₹2.2 Lakhs/year",
+                ranking: 1,
+                website: "https://iitd.ac.in"
+            },
+            {
+                id: 2,
+                name: "National Institute of Technology, Trichy",
+                location: "Tamil Nadu",
+                type: "NIT",
+                branches: ["Computer Science", "Electronics", "Mechanical", "Civil"],
+                cutoff: 97.2,
+                fees: "₹1.8 Lakhs/year",
+                ranking: 9,
+                website: "https://nitt.edu"
+            },
+            {
+                id: 3,
+                name: "Birla Institute of Technology and Science, Pilani",
+                location: "Rajasthan",
+                type: "Deemed University",
+                branches: ["Computer Science", "Electronics", "Mechanical", "Civil", "Chemical"],
+                cutoff: 96.8,
+                fees: "₹4.5 Lakhs/year",
+                ranking: 12,
+                website: "https://bits-pilani.ac.in"
+            },
+            {
+                id: 4,
+                name: "Vellore Institute of Technology",
+                location: "Tamil Nadu",
+                type: "Private",
+                branches: ["Computer Science", "Electronics", "Mechanical", "Biotechnology"],
+                cutoff: 94.5,
+                fees: "₹3.8 Lakhs/year",
+                ranking: 15,
+                website: "https://vit.ac.in"
+            },
+            {
+                id: 5,
+                name: "Indian Institute of Technology, Bombay",
+                location: "Maharashtra",
+                type: "IIT",
+                branches: ["Computer Science", "Electronics", "Mechanical", "Civil", "Chemical", "Aerospace"],
+                cutoff: 99.0,
+                fees: "₹2.2 Lakhs/year",
+                ranking: 2,
+                website: "https://iitb.ac.in"
+            },
+            {
+                id: 6,
+                name: "Delhi Technological University",
+                location: "Delhi",
+                type: "Government",
+                branches: ["Computer Science", "Electronics", "Mechanical", "Civil"],
+                cutoff: 95.8,
+                fees: "₹1.5 Lakhs/year",
+                ranking: 20,
+                website: "https://dtu.ac.in"
+            },
+            {
+                id: 7,
+                name: "SRM Institute of Science and Technology",
+                location: "Tamil Nadu",
+                type: "Private",
+                branches: ["Computer Science", "Electronics", "Mechanical", "Civil", "Biotechnology"],
+                cutoff: 93.2,
+                fees: "₹3.5 Lakhs/year",
+                ranking: 18,
+                website: "https://srmist.edu.in"
+            },
+            {
+                id: 8,
+                name: "Indian Institute of Information Technology, Allahabad",
+                location: "Uttar Pradesh",
+                type: "IIIT",
+                branches: ["Computer Science", "Electronics", "Business"],
+                cutoff: 96.5,
+                fees: "₹2.0 Lakhs/year",
+                ranking: 17,
+                website: "https://iiita.ac.in"
+            }
+        ];
+        
+        // Interest to branch mapping
+        const interestToBranch = {
+            "computer-science": ["Computer Science", "Information Technology", "Data Science", "Artificial Intelligence"],
+            "electronics": ["Electronics", "Electrical Engineering", "Electronics and Communication"],
+            "mechanical": ["Mechanical Engineering", "Production Engineering", "Automobile Engineering"],
+            "civil": ["Civil Engineering", "Construction Engineering", "Environmental Engineering"],
+            "chemical": ["Chemical Engineering", "Petroleum Engineering", "Polymer Engineering"],
+            "biotechnology": ["Biotechnology", "Biochemical Engineering", "Biomedical Engineering"],
+            "aerospace": ["Aerospace Engineering", "Aeronautical Engineering"],
+            "medicine": ["Medicine", "Pharmacy", "Biomedical Engineering"],
+            "business": ["Management Studies", "Business Administration", "Commerce"],
+            "arts": ["Design", "Liberal Arts", "Humanities"]
+        };
+        
+        // Form submission handler
+        document.getElementById('predictor-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            document.getElementById('loading-spinner').style.display = 'block';
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const state = document.getElementById('state').value;
+            const examType = document.getElementById('exam-type').value;
+            const percentile = document.getElementById('percentile').value;
+            const casteCategory = document.getElementById('caste-category').value;
+            
+            // Get selected interests
+            const interests = [];
+            document.querySelectorAll('input[name="interests"]:checked').forEach(checkbox => {
+                interests.push(checkbox.value);
+            });
+            
+            // Get preferred locations
+            const locations = [];
+            document.querySelectorAll('input[name="location"]:checked').forEach(checkbox => {
+                locations.push(checkbox.value);
+            });
+            // Get college types
+const collegeTypes = [];
+document.querySelectorAll('input[name="college-type"]:checked').forEach(checkbox => {
+    collegeTypes.push(checkbox.value);
+});
+
+// Simulate AI processing
+setTimeout(() => {
+    // Hide spinner
+    document.getElementById('loading-spinner').style.display = 'none';
+    
+    // Calculate matched colleges
+    let matchedColleges = calculateMatches(percentile, casteCategory, interests, locations, collegeTypes);
+    
+    // Display results
+    displayResults(matchedColleges);
+    
+    // Show results section
+    document.getElementById('results').style.display = 'block';
+    
+    // Scroll to results
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+}, 2000);
+});
+
+// Function to calculate college matches
+function calculateMatches(percentile, category, interests, locations, collegeTypes) {
+    // Convert percentile to number
+    const percentileNum = parseFloat(percentile);
+    
+    // Filter colleges based on criteria
+    let matchedColleges = collegeData.filter(college => {
+        // Check if college meets cutoff requirements
+        // Add category adjustment (simulating reservation benefits)
+        let adjustedPercentile = percentileNum;
+        if (category === 'obc') adjustedPercentile += 2;
+        if (category === 'sc' || category === 'st') adjustedPercentile += 5;
+        if (category === 'ews') adjustedPercentile += 1;
+        
+        // Check if adjusted percentile meets cutoff
+        if (adjustedPercentile < college.cutoff - 5) return false;
+        
+        // Check college type
+        if (collegeTypes.length > 0) {
+            const collegeType = college.type.toLowerCase();
+            if (!collegeTypes.some(type => collegeType.includes(type))) return false;
+        }
+        
+        // Check for matching interests/branches
+        if (interests.length > 0) {
+            const collegeBranches = college.branches.map(branch => branch.toLowerCase());
+            const matchingBranches = interests.some(interest => {
+                const relatedBranches = interestToBranch[interest].map(branch => branch.toLowerCase());
+                return relatedBranches.some(branch => collegeBranches.includes(branch.toLowerCase()));
+            });
+            
+            if (!matchingBranches) return false;
+        }
+        
+        // Check location preferences
+        if (locations.length > 0) {
+            const collegeRegion = getCollegeRegion(college.location);
+            if (!locations.includes(collegeRegion)) return false;
+        }
+        
+        return true;
+    });
+    
+    // Calculate match percentage
+    matchedColleges = matchedColleges.map(college => {
+        let matchScore = 0;
+        
+        // Score based on percentile match
+        const percentileGap = college.cutoff - percentileNum;
+        if (percentileGap <= 0) matchScore += 40;
+        else if (percentileGap <= 2) matchScore += 30;
+        else if (percentileGap <= 5) matchScore += 20;
+        else matchScore += 10;
+        
+        // Score based on interest match
+        if (interests.length > 0) {
+            const collegeBranches = college.branches.map(branch => branch.toLowerCase());
+            let interestScore = 0;
+            
+            interests.forEach(interest => {
+                const relatedBranches = interestToBranch[interest].map(branch => branch.toLowerCase());
+                if (relatedBranches.some(branch => collegeBranches.includes(branch.toLowerCase()))) {
+                    interestScore += 20 / interests.length;
+                }
+            });
+            
+            matchScore += interestScore;
+        } else {
+            matchScore += 20; // No specific interests
+        }
+        
+        // Score based on location match
+        if (locations.length > 0) {
+            const collegeRegion = getCollegeRegion(college.location);
+            if (locations.includes(collegeRegion)) {
+                matchScore += 20;
+            }
+        } else {
+            matchScore += 20; // No location preference
+        }
+        
+        // Score based on college type
+        if (collegeTypes.length > 0) {
+            const collegeType = college.type.toLowerCase();
+            if (collegeTypes.some(type => collegeType.includes(type))) {
+                matchScore += 20;
+            }
+        } else {
+            matchScore += 20; // No college type preference
+        }
+        
+        return {
+            ...college,
+            matchScore: matchScore
+        };
+    });
+    
+    // Sort by match score
+    return matchedColleges.sort((a, b) => b.matchScore - a.matchScore);
+}
+
+// Helper function to get region from state
+function getCollegeRegion(state) {
+    const northStates = ['Delhi', 'Haryana', 'Punjab', 'Uttar Pradesh', 'Uttarakhand', 'Himachal Pradesh', 'Jammu and Kashmir'];
+    const southStates = ['Tamil Nadu', 'Kerala', 'Karnataka', 'Andhra Pradesh', 'Telangana'];
+    const eastStates = ['West Bengal', 'Odisha', 'Bihar', 'Jharkhand', 'Assam'];
+    const westStates = ['Maharashtra', 'Gujarat', 'Rajasthan', 'Goa'];
+    const centralStates = ['Madhya Pradesh', 'Chhattisgarh'];
+    
+    if (northStates.includes(state)) return 'north';
+    if (southStates.includes(state)) return 'south';
+    if (eastStates.includes(state)) return 'east';
+    if (westStates.includes(state)) return 'west';
+    if (centralStates.includes(state)) return 'central';
+    
+    return 'other';
+}
+
+// Display results
+function displayResults(colleges) {
+    const collegeListContainer = document.getElementById('college-list');
+    collegeListContainer.innerHTML = '';
+    
+    if (colleges.length === 0) {
+        collegeListContainer.innerHTML = '<p>No colleges match your criteria. Try adjusting your preferences.</p>';
+        return;
+    }
+    
+    colleges.forEach(college => {
+        const collegeCard = document.createElement('div');
+        collegeCard.className = 'college-card';
+        
+        const matchPercentage = Math.min(Math.round(college.matchScore), 100);
+        
+        collegeCard.innerHTML = `
+            <h3 class="college-name">${college.name}</h3>
+            <div class="college-details">
+                <div class="college-detail">
+                    <div class="detail-label">Location</div>
+                    <div class="detail-value">${college.location}</div>
+                </div>
+                <div class="college-detail">
+                    <div class="detail-label">Type</div>
+                    <div class="detail-value">${college.type}</div>
+                </div>
+                <div class="college-detail">
+                    <div class="detail-label">Fees</div>
+                    <div class="detail-value">${college.fees}</div>
+                </div>
+                <div class="college-detail">
+                    <div class="detail-label">Ranking</div>
+                    <div class="detail-value">#${college.ranking}</div>
+                </div>
+            </div>
+            <div class="college-match">
+                <div class="match-percentage">${matchPercentage}% Match</div>
+                <div class="match-bar">
+                    <div class="match-fill" style="width: ${matchPercentage}%;"></div>
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <strong>Available Branches:</strong> ${college.branches.join(', ')}
+            </div>
+            <div style="margin-top: 10px;">
+                <a href="${college.website}" target="_blank" class="btn" style="padding: 8px 15px;">Visit Website</a>
+            </div>
+        `;
+        
+        collegeListContainer.appendChild(collegeCard);
+    });
+}
+</script>
+</body>
+</html>
+           
